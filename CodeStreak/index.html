@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeStreak - Gamified Coding Practice Tracker</title>
+    <meta name="description" content="Track your daily coding habits, earn points, badges, and maintain your coding streak with CodeStreak.">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🚀</span>
+                CodeStreak
+            </div>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-links">
+                <li><button class="nav-btn active" data-target="home-section">Home</button></li>
+                <li><button class="nav-btn" data-target="practice-section">Practice</button></li>
+                <li><button class="nav-btn" data-target="dashboard-section">Dashboard</button></li>
+                <li><button class="nav-btn" data-target="tracker-section">Tracker</button></li>
+                <li><button class="nav-btn" data-target="leaderboard-section">Leaderboard</button></li>
+                <li><button class="nav-btn" data-target="settings-section">Settings</button></li>
+            </ul>
+
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Application Region -->
+    <main class="app-container">
+        
+        <!-- 1. HOME SECTION -->
+        <section id="home-section" class="page-section active">
+            <div class="hero-card">
+                <span class="hero-badge">Welcome to CodeStreak</span>
+                <h1 class="hero-title">Gamify Your <span class="text-gradient">Coding Journey</span></h1>
+                <p class="hero-subtitle">Maintain your daily programming streak, earn points, unlock badges, and stay consistent!</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary cta-btn" data-target="tracker-section">Log Today's Progress</button>
+                    <button class="btn btn-secondary cta-btn" data-target="dashboard-section">View My Stats</button>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>Build Streaks</h3>
+                    <p>Code daily to maintain and grow your streak.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Earn Badges</h3>
+                    <p>Unlock milestone badges for consistency.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏅</div>
+                    <h3>Level Up</h3>
+                    <p>Earn points for every problem you solve.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.5 PRACTICE SECTION -->
+        <section id="practice-section" class="page-section hidden">
+            <header class="section-header">
+                <h2>Practice Arena</h2>
+                <p>Solve coding puzzles right here to earn points and build your streak!</p>
+            </header>
+
+            <div class="practice-container panel">
+                <div id="active-problem-container">
+                    <div class="problem-header">
+                        <span class="problem-difficulty" id="prob-diff">Easy</span>
+                        <span class="problem-reward">+10 Pts</span>
+                    </div>
+                    <h3 id="prob-title" style="margin-top: 10px; margin-bottom: 5px;">Loading...</h3>
+                    <p id="prob-desc" style="color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5;">...</p>
+                    
+                    <div class="problem-code-block" style="background: var(--bg-primary); padding: 15px; border-radius: 8px; font-family: monospace; margin-bottom: 20px; border: 1px solid var(--border-color);">
+                        <code id="prob-code">...</code>
+                    </div>
+
+                    <div class="problem-actions">
+                        <label for="prob-answer" style="display:block; margin-bottom:8px; font-weight:600;">Your Answer:</label>
+                        <input type="text" id="prob-answer" class="full-width" placeholder="Type the expected output..." style="padding: 10px; border: 1px solid var(--border-color); border-radius: var(--border-radius); background: var(--bg-primary); color: var(--text-primary); margin-bottom: 15px;">
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button id="submit-answer-btn" class="btn btn-primary full-width">Submit Answer</button>
+                            <button id="skip-problem-btn" class="btn btn-secondary full-width">Skip Question</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="problem-feedback" class="tracker-status" style="margin-top:20px;"></div>
+            </div>
+        </section>
+
+        <!-- 2. DASHBOARD SECTION -->
+        <section id="dashboard-section" class="page-section hidden">
+            <header class="section-header">
+                <h2>Your Dashboard</h2>
+                <p>Track your programming consistency and achievements.</p>
+            </header>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card streak-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-info">
+                        <h3>Current Streak</h3>
+                        <span class="stat-value" id="dash-streak">0 Days</span>
+                    </div>
+                </div>
+                <div class="stat-card problems-card">
+                    <div class="stat-icon">💻</div>
+                    <div class="stat-info">
+                        <h3>Problems Solved</h3>
+                        <span class="stat-value" id="dash-problems">0</span>
+                    </div>
+                </div>
+                <div class="stat-card points-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <h3>Total Points</h3>
+                        <span class="stat-value" id="dash-points">0 Pts</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <!-- Badges Display -->
+                <div class="badges-container panel">
+                    <h3>Unlocked Badges</h3>
+                    <div class="badges-list" id="badges-list">
+                        <!-- Populated by JS -->
+                        <div class="empty-state">No badges earned yet. Start a 3-day streak!</div>
+                    </div>
+                </div>
+
+                <!-- Activity History Display -->
+                <div class="history-container panel">
+                    <h3>Recent Activity</h3>
+                    <div class="history-list" id="history-list">
+                        <!-- Populated by JS -->
+                        <div class="empty-state">No recent activity found.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TRACKER SECTION -->
+        <section id="tracker-section" class="page-section hidden">
+            <header class="section-header">
+                <h2>Daily Tracker</h2>
+                <p>Log the problems you've solved today to keep your streak alive.</p>
+            </header>
+
+            <div class="tracker-form-container panel">
+                <div id="tracker-status" class="tracker-status">
+                    <!-- Status message injected by JS -->
+                </div>
+                
+                <form id="daily-log-form" class="tracker-form">
+                    <div class="form-group">
+                        <label for="problems-solved">Number of Problems Solved Today</label>
+                        <input type="number" id="problems-solved" min="1" max="100" placeholder="e.g. 3" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width" id="submit-log-btn">Mark as Completed</button>
+                </form>
+
+                <div class="points-info">
+                    💡 <em>Each problem solved gives you +10 points!</em>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. LEADERBOARD SECTION -->
+        <section id="leaderboard-section" class="page-section hidden">
+            <header class="section-header">
+                <h2>Global Leaderboard</h2>
+                <p>See how you stack up against top coders.</p>
+            </header>
+
+            <div class="leaderboard-container panel">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>User</th>
+                            <th>Streak</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- Mock data populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. SETTINGS SECTION -->
+        <section id="settings-section" class="page-section hidden">
+            <header class="section-header">
+                <h2>Settings</h2>
+                <p>Customize your profile and manage your data.</p>
+            </header>
+
+            <div class="settings-grid">
+                <!-- Profile Settings -->
+                <div class="panel">
+                    <h3>Profile Information</h3>
+                    <form id="settings-form" style="margin-top: 15px;">
+                        <div class="form-group">
+                            <label for="setting-username">Username</label>
+                            <input type="text" id="setting-username" placeholder="Enter your display name" maxlength="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="setting-avatar">Avatar Emoji</label>
+                            <input type="text" id="setting-avatar" placeholder="e.g. 👨‍💻" maxlength="3">
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width">Save Profile</button>
+                    </form>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="panel danger-zone">
+                    <h3 style="color: var(--badge-gold); margin-bottom: 10px;">Danger Zone</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">
+                        This action is irreversible. Resetting your progress will delete your points, streak, and history local data.
+                    </p>
+                    <button id="reset-data-btn" class="btn" style="background-color: transparent; border: 2px solid #ef4444; color: #ef4444; width: 100%;">
+                        Reset All Data
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
